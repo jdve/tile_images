@@ -73,15 +73,17 @@ proc main(files: seq[string], numPerPage: int = 9) =
   discard tile(sortedFiles, outputAll, "256x256+4+4")
   toPdf.add(outputAll)
 
-  let outputFiles = getTempFile(".jpg")
+  let outputFiles = getUniqueFile(path, "tiled (all)", ".jpg")
   msg(outputFiles, "creating page with list of image names")
   discard filenames(sortedFiles, outputFiles)
   toDelete.add(outputFiles)
   toPdf.add(outputFiles)
 
   if len(sortedFiles) > numPerPage:
+    var index = 1
+
     for page in paginate(files, numPerPage):
-      let outputPage = getTempFile(".jpg")
+      let outputPage = getUniqueFile(path, fmt"tiled ({index})", ".jpg")
 
       msg(outputPage, "creating page of tiled images")
       for f in page:
@@ -90,6 +92,8 @@ proc main(files: seq[string], numPerPage: int = 9) =
       discard tile(page, outputPage, "512x512+4+4")
       toDelete.add(outputPage)
       toPdf.add(outputPage)
+
+      index = index + 1
 
   let outputPdf = getUniqueFile(path, "tiled", ".pdf")
   msg(outputPdf, "creating pdf")
