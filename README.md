@@ -11,11 +11,12 @@ containing the list of files included in the PDF for reference purposes.
 ## Usage
 
 ### MacOS Finder
-1. Download the [latest release](https://github.com/jdve/tile_images/releases).
-2. Unzip the release.
-3. Double-click `Tile Images.workflow` to install.
-4. Right-click on any number of image files in Finder.
-5. Choose the "Tile Images" option from the "Quick Actions" menu.
+1. Install [XQuartz](https://www.xquartz.org/).
+2. Download the [latest release](https://github.com/jdve/tile_images/releases).
+3. Unzip the release.
+4. Double-click `Tile Images.workflow` to install.
+5. Right-click on any number of image files in Finder.
+6. Choose the "Tile Images" option from the "Quick Actions" menu.
 
 ![Using MacOS Finder](doc/finder.gif)
 
