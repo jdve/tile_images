@@ -9,6 +9,8 @@ import strformat
 import strutils
 import terminal
 
+import std/exitprocs
+
 proc msg(file: string, msg: string) =
   styledEcho(fgGreen, file, resetStyle, ": " & msg)
 
@@ -104,7 +106,7 @@ proc main(files: seq[string], numPerPage: int = 9) =
   removeFiles(toDelete)
 
 when isMainModule:
-  system.addQuitProc(resetAttributes)
+  exitprocs.addExitProc(resetAttributes)
 
   import cligen
   dispatch(main, "tile_images",
