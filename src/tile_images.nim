@@ -14,10 +14,12 @@ import std/exitprocs
 proc msg(file: string, msg: string) =
   styledEcho(fgGreen, file, resetStyle, ": " & msg)
 
-proc tile(files: seq[string], output: string, geometry: string): string =
+proc tile(files: seq[string], output: string, geometry: string, ratio: float = 1.0): string =
   ## Tile several image files into one image.
   var args: seq[string] = @[]
-  let numTiles = int(ceil(sqrt(float(len(files)))))
+  let numTiles = float(len(files))
+  let tilesX = int(floor(sqrt(numTiles) * ratio))
+  let tilesY = int(ceil(numTiles / float(tilesX)))
 
   args.add(files)
   args.add([
@@ -25,7 +27,7 @@ proc tile(files: seq[string], output: string, geometry: string): string =
     "-geometry", geometry,
     "-pointsize", "8",
     "-title", parentDir(absolutePath(files[0])),
-    "-tile", fmt"{numTiles}x{numTiles}"
+    "-tile", fmt"{tilesX}x{tilesY}"
   ])
 
   args.add(output)
@@ -75,7 +77,13 @@ proc main(files: seq[string], numPerPage: int = 9) =
   discard tile(sortedFiles, outputAll, "256x256+4+4")
   toPdf.add(outputAll)
 
-  let outputFiles = getUniqueFile(path, "tiled (all)", ".jpg")
+  let outputWide = getUniqueFile(path, "tiled (wide)", ".jpg")
+  msg(outputAll, "creating tile of all images in widescreen")
+  for f in sortedFiles:
+    styledEcho("  " & f)
+  discard tile(sortedFiles, outputWide, "256x256+4+4", 2000/1200)
+
+  let outputFiles = getUniqueFile(path, "tiled (files)", ".jpg")
   msg(outputFiles, "creating page with list of image names")
   discard filenames(sortedFiles, outputFiles)
   toDelete.add(outputFiles)
