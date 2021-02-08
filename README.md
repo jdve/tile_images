@@ -8,6 +8,11 @@ containing both the single tiled image as well as the tiled images spread
 across multiple pages to faciliate better printing quality and a page
 containing the list of files included in the PDF for reference purposes.
 
+## Requirements
+
+- [ffmpeg](https://ffmpeg.org/) - best installed using `brew install ffmpeg`
+  ([brew](https://brew.sh/))
+
 ## Usage
 
 ### MacOS Finder

@@ -9,17 +9,10 @@ rm -rf *.workflow
 
 cp -r ~/Library/Services/Tile\ Images.workflow .
 
-if [ ! -e "ImageMagick-x86_64-apple-darwin20.1.0.tar.gz" ]; then
-   curl https://imagemagick.org/download/binaries/ImageMagick-x86_64-apple-darwin20.1.0.tar.gz --output ImageMagick-x86_64-apple-darwin20.1.0.tar.gz
-fi
+RESOURCES=Tile\ Images.workflow/Contents/Resources
 
-tar fzx ImageMagick-x86_64-apple-darwin20.1.0.tar.gz
+rm -rf "$RESOURCES"
+mkdir -p "$RESOURCES"
 
-rm -rf Tile\ Images.workflow/Contents/Resources
-mkdir -p Tile\ Images.workflow/Contents/Resources
-
-cp -r ImageMagick-7.0.10 Tile\ Images.workflow/Contents/Resources
-rm -rf ImageMagick-7.0.10
-
-cp tile_images Tile\ Images.workflow/Contents/Resources
+cp tile_images "$RESOURCES"
 
